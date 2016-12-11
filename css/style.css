@@ -1,0 +1,52 @@
+/* Global Layout */
+
+* {
+  box-sizing: border-box;
+}
+
+/*body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+}*/
+
+.gallery {
+    margin: 10% auto;
+    padding: 0;
+    text-align: center;
+}
+
+.gallery a {
+    display: inline-block;
+    padding: 5px;
+}
+
+.overlay {
+    background: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    text-align: center;
+}
+
+.overlay img {
+    width: 600px;
+    margin-top: 15%;
+}
+
+.overlay p {
+    color: white;
+}
+
+button {
+    font-size: 20px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    background-color: darkgray;
+}
+
