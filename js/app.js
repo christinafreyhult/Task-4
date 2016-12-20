@@ -3,61 +3,70 @@ $('#search').hideseek({
   attribute: 'data-alt'
 });
 
+
 //create variables for later use
 var $overlay = $('<div class="overlay"><div>');
-//var $prevImage = $("<img>");
+var imgLink;
 var $image = $("<img>");
-//var $nextImage = $("<img>");
 var $text = $("<p></p>");
+var prevObject;
+var nextObject;
 var $prevButton =$('<button id="prev"><</button>');
 var $nextButton =$('<button id="next">></button>');
 
-//add the selected image to the overlay
+//add the selected image, text and buttons to the overlay
 $overlay.append($prevButton);
 $overlay.append($image);
 $overlay.append($nextButton);
 $overlay.append($text);
 
-
 //add the overlay to the html
 $("body").append($overlay);
 
-//listen to the click, 
+
+//listen to the click from gallery
 $(".gallery a").click(function(event){
     event.preventDefault();   //prevent normal opening of source image
     
     //get the link of the selected img and add to ovelay code
-    var imgLink = $(this).attr("href");
+    imgLink = $(this).attr("href");
     $image.attr("src", imgLink);
-    
+        
     //get the descriptive text and add to code
-    var imgText = $(this).parent().attr("data-alt");
-    var nextLink = $(this).parent().next().children().attr("href");
-    var nextDisplay = $(this).parent().next().children().css("display");
+    imgText = $(this).parent().attr("data-alt");
     $text.text(imgText);
-    console.log("current pic is " + imgText); //testing purpose, print the current text
-    console.log("next link is " + nextLink); //testing purpose, print the current text
-    console.log("next display value is " + nextDisplay); //testing puspose, print the link of next image
     
-    //var tryNext = $(this).parent().next()//do a step to the next element, fetch style attr      style="display: none;"
-    //while style attr not found, 
-    //go to next li element
-    //then get link to correct element
+    //get the next and prev object
+    prevObject = $(this).parent().prev().children();
+    nextObject = $(this).parent().next().children();
+
+    //show the overlay
+    $overlay.show();
+});
+
+
+//listen to prev button selection
+$prevButton.click(function(event){
+   console.log("Previous selected"); //test that button was selected
+    event.preventDefault();   //prevent overlay from closing
+    
+    imgLink = prevObject.attr("href"); //set prev obj link as the current obj link
+    $image.attr("src", imgLink);
+     
+    imgText = prevObject.parent().attr("data-alt"); //get the descriptive text and add to code
+    $text.text(imgText);
+    
+    console.log("New current img is " + imgLink + " with desc: " + imgText); //test that current obj has new values
+    
+    nextObject = prevObject.parent().next().children(); //set new values
+    prevObject = prevObject.parent().prev().children(); //set new values
+    
     
     //show the overlay
     $overlay.show();
 });
 
-//listen to button selection
-$prevButton.click(function(event){
-    //prevent overlay from closing on button click
-    event.preventDefault();
-    console.log("Prev");
-    //get link to prev img
-    
-    //set button link to prev img
-});
-
+// close the overlay if selection anywhere
 $overlay.click(function(){
     $overlay.hide();    
 })
