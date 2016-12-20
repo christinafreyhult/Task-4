@@ -11,6 +11,17 @@
   font-family: 'Merriweather', serif;
 }*/
 
+input {
+    display: inline-block;
+    margin: 2% auto;
+    text-align: center;
+}
+
+ul li,
+ul li a{
+    display: inline-block;
+}
+
 .gallery {
     margin: 10% auto;
     padding: 0;
@@ -42,8 +53,10 @@
     color: white;
 }
 
-button {
-    font-size: 20px;
+.overlay button {
+    display: inline-block;
+    margin: 50px;
+    font-size: 25px;
     border-radius: 50%;
     border: none;
     color: white;
