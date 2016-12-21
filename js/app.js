@@ -1,18 +1,22 @@
-//filter any searched images
+//filter any searched images using the HideSeek plugin    http://vdw.github.io/HideSeek/
 $('#search').hideseek({
   attribute: 'data-alt'
 });
 
 
 //create variables for later use
-var $overlay = $('<div class="overlay"><div>');
+var $overlay = $('<div id="overlay"><div>');
 var imgLink;
+var imgText;
 var $image = $("<img>");
 var $text = $("<p></p>");
-var prevObject;
-var nextObject;
-var $prevButton =$('<button id="prev"><</button>');
-var $nextButton =$('<button id="next">></button>');
+var $prevButton = $('<button id="prev"><</button>');
+var $nextButton = $('<button id="next">></button>');
+var $index = 0;
+var $galleryLength = $(".gallery li").length;
+
+//add the overlay to the html
+$("body").append($overlay);
 
 //add the selected image, text and buttons to the overlay
 $overlay.append($prevButton);
@@ -20,9 +24,12 @@ $overlay.append($image);
 $overlay.append($nextButton);
 $overlay.append($text);
 
-//add the overlay to the html
-$("body").append($overlay);
 
+//create function to set what image and text to be shown
+function setImage(imgLocation, imgDesc){
+    $image.attr("src", imgLocation)//set img source
+    $text.text(imgDesc);//set text contents
+}
 
 //listen to the click from gallery
 $(".gallery a").click(function(event){
@@ -36,37 +43,58 @@ $(".gallery a").click(function(event){
     imgText = $(this).parent().attr("data-alt");
     $text.text(imgText);
     
-    //get the next and prev object
-    prevObject = $(this).parent().prev().children();
-    nextObject = $(this).parent().next().children();
+    //get index of selected img
+    $index = $(this).parent().index();
 
+    //call on function to set current img in the lightbox
+    setImage(imgLink, imgText);
+    
     //show the overlay
     $overlay.show();
 });
 
+//create function to fetch the previous image (if any)
+function prevImg(){
+    if($index!=0){$index--;} // if img not at first img, set index to one less
+    
+    //get object from new index
+    var newImgLink = $(".gallery li").get($index).getElementsByTagName("a");
+
+    //get new link and text
+    imgLink = $(newImgLink).attr("href");
+    imgText = $(newImgLink).parent().attr("data-alt");
+    
+    setImage(imgLink,imgText);
+}
+
+//create function to fetch the next image (if any)
+function nextImg(){
+    if($index!= $galleryLength){$index++;} // if img not at last img, set index to one more
+    
+    //get object from new index
+    var newImgLink = $(".gallery li").get($index).getElementsByTagName("a");
+
+    //get new link and text
+    imgLink = $(newImgLink).attr("href");
+    imgText = $(newImgLink).parent().attr("data-alt");
+    
+    setImage(imgLink,imgText);
+}
 
 //listen to prev button selection
 $prevButton.click(function(event){
-   console.log("Previous selected"); //test that button was selected
-    event.preventDefault();   //prevent overlay from closing
-    
-    imgLink = prevObject.attr("href"); //set prev obj link as the current obj link
-    $image.attr("src", imgLink);
-     
-    imgText = prevObject.parent().attr("data-alt"); //get the descriptive text and add to code
-    $text.text(imgText);
-    
-    console.log("New current img is " + imgLink + " with desc: " + imgText); //test that current obj has new values
-    
-    nextObject = prevObject.parent().next().children(); //set new values
-    prevObject = prevObject.parent().prev().children(); //set new values
-    
-    
-    //show the overlay
-    $overlay.show();
+    prevImg();   
 });
 
-// close the overlay if selection anywhere
-$overlay.click(function(){
-    $overlay.hide();    
+$nextButton.click(function(event){
+    nextImg();
+});
+
+// close the overlay if selection anywhere on the overlay 
+$overlay.click(function(event){
+    
+    if(event.target.id == "overlay"){
+        console.log("Overlay closed");
+        $overlay.hide();    
+    }
 })

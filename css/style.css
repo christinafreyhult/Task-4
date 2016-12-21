@@ -13,8 +13,11 @@
 
 input {
     display: inline-block;
-    margin: 2% auto;
-    text-align: center;
+    width: 450px;
+    height: 50px;
+    margin: 2% 20%;
+    text-align: left;
+    font-size: 16px;
 }
 
 ul li,
@@ -23,18 +26,18 @@ ul li a{
 }
 
 .gallery {
-    margin: 10% auto;
+    margin: 10%;
     padding: 0;
     text-align: center;
 }
 
 .gallery a {
     display: inline-block;
-    padding: 5px;
+    padding: 25px;
 }
 
-.overlay {
-    background: rgba(0,0,0,0.7);
+#overlay {
+    background: rgba(0,0,0,0.9);
     width: 100%;
     height: 100%;
     position: absolute;
@@ -44,16 +47,19 @@ ul li a{
     text-align: center;
 }
 
-.overlay img {
+#overlay img {
     width: 600px;
     margin-top: 15%;
 }
 
-.overlay p {
+#overlay p {
     color: white;
+    width: 600px;
+    margin: 0 auto;
+    text-align: left;
 }
 
-.overlay button {
+#overlay button {
     display: inline-block;
     margin: 50px;
     font-size: 25px;
