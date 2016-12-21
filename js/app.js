@@ -27,7 +27,7 @@ $overlay.append($text);
 
 //create function to set what image and text to be shown
 function setImage(imgLocation, imgDesc){
-    $image.attr("src", imgLocation)//set img source
+    $image.attr("src", imgLocation);//set img source
     $text.text(imgDesc);//set text contents
 }
 
@@ -55,7 +55,7 @@ $(".gallery a").click(function(event){
 
 //create function to fetch the previous image (if any)
 function prevImg(){
-    if($index!=0){$index--;} // if img not at first img, set index to one less
+    if($index>0){$index--;} // if img not at first img, set index to one less
     
     //get object from new index
     var newImgLink = $(".gallery li").get($index).getElementsByTagName("a");
@@ -69,7 +69,7 @@ function prevImg(){
 
 //create function to fetch the next image (if any)
 function nextImg(){
-    if($index!= $galleryLength){$index++;} // if img not at last img, set index to one more
+    if($index<$galleryLength){$index++;} // if img not at last img, set index to one more
     
     //get object from new index
     var newImgLink = $(".gallery li").get($index).getElementsByTagName("a");
@@ -97,4 +97,4 @@ $overlay.click(function(event){
         console.log("Overlay closed");
         $overlay.hide();    
     }
-})
+});
